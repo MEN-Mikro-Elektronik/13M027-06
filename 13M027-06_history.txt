@@ -1,0 +1,23 @@
+===== [ History of fileset ART/13M027-06/13M027-06 ] =====
+
+
+-----[ Revision 2.2 ]-----
+[ 2010-03-10 15:17:22 by amorbach ]
+R: usr_utl.h missing in FS
+M: usr_utl.h added to FS
+
+-----[ Revision 2.1 ]-----
+[ 2010-03-10 14:16:49 by amorbach ]
+   R: Porting to MDIS5
+   M: changed according to MDIS Porting Guide 0.8
+
+-----[ Revision 2.0 ]-----
+[ 2004-05-03 14:39:38 by cs ]
+M81 id added
+Swapped access support added
+Minor changes for MDIS4/2004 conformity
+
+-----[ Revision 1.1 ]-----
+[ 1998-12-11 15:21:45 by Schmidt ]
+Initial Revision
+

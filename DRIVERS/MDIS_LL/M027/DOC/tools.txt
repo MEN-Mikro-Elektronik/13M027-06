@@ -1,0 +1,50 @@
+Program Description
+===================
+Mon May  3 13:59:52 CEST 2004
+ 
+Overview of all Programs
+------------------------
+
+m27_rw           - Read/write M27 channels 0..15
+m27_simp         - M27 example for read/write
+
+Program m27_rw
+--------------
+
+Usage:
+   m27_rw [<opts>] <device> [<opts>]
+
+Function:
+   Read/write M27 channels 0..15
+
+Options:
+   device         device name                             [none]   
+   -g=<chan>      read     : get state of channel         [none]   
+   -s=<chan>      write    : set channel                  [none]   
+   -r=<chan>      write    : reset channel                [none]   
+   -G=<chan>      getblock : get state of channel 0..chan [none]   
+   -S=<string>    setblock : set/reset channels           [none]   
+                             eg. -S=rss -> reset ch0   
+                                        -> set   ch1   
+                                        -> set   ch2   
+   -t (requires option -S) : toggle specified channels    [none]   
+   Note: If you specify only the device name, the path will be held open.   
+   
+Description:
+   Universal tool for read/write M27 channels   
+   
+Program m27_simp
+----------------
+
+Usage:
+   m27_simp <device> <chan>
+
+Function:
+   M27 example for read/write
+
+Options:
+   device       device name   
+   
+Description:
+   Simple example program for the M27 driver    
+   

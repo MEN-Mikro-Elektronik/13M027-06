@@ -1,0 +1,413 @@
+<html>
+<head>
+<title>M027 driver</title>
+<style type=text/css>
+    Body { background-color: #ffffff; }
+    A:link { color: #c50038; }
+    A:hover { color: #28669b; }
+    P, H1, H2, H3, H3, H5, LI {
+        color: #434343;
+        font-family: Arial, Helvetica, Univers;
+    }
+    P, LI { font-size: 9.000000pt; }
+</style>
+</head>
+<body>
+<h1>M027 driver</h1>
+<p>Mon May  3 13:59:52 CEST 2004</p>
+<h2>Overview of all Functions</h2>
+<a name="chapt0"><a href="#intro0"><h3>Low-level driver for M27, M28 and M81 M-Modules</h3></a>
+<TABLE border=1>
+<TR><TD><P><B>Function</B></P></TD><TD><P><B>Description</B></P></TD></TR>
+
+<TR><TD><P><a href="#M27_GetEntry">M27_GetEntry</a></P></TD><TD><P>Initialize drivers jump table </P></TD></TR>
+<TR><TD><P><a href="#M27_Init">M27_Init</a></P></TD><TD><P>Allocate and return ll handle, initialize hardware </P></TD></TR>
+<TR><TD><P><a href="#M27_Exit">M27_Exit</a></P></TD><TD><P>De-initialize hardware and cleanup memory </P></TD></TR>
+<TR><TD><P><a href="#M27_Read">M27_Read</a></P></TD><TD><P>Reads value from device </P></TD></TR>
+<TR><TD><P><a href="#M27_Write">M27_Write</a></P></TD><TD><P>Write value to device </P></TD></TR>
+<TR><TD><P><a href="#M27_SetStat">M27_SetStat</a></P></TD><TD><P>Set driver status </P></TD></TR>
+<TR><TD><P><a href="#M27_GetStat">M27_GetStat</a></P></TD><TD><P>Get driver status </P></TD></TR>
+<TR><TD><P><a href="#M27_BlockRead">M27_BlockRead</a></P></TD><TD><P>Read data block from device </P></TD></TR>
+<TR><TD><P><a href="#M27_BlockWrite">M27_BlockWrite</a></P></TD><TD><P>Write data block to device </P></TD></TR>
+<TR><TD><P><a href="#M27_Irq">M27_Irq</a></P></TD><TD><P>Interrupt service routine </P></TD></TR>
+<TR><TD><P><a href="#M27_Info">M27_Info</a></P></TD><TD><P>Get information about hardware and driver requirements. </P></TD></TR>
+<TR><TD><P><a href="#Ident">Ident</a></P></TD><TD><P>Return ident string </P></TD></TR>
+<TR><TD><P><a href="#Cleanup">Cleanup</a></P></TD><TD><P>Close all handles, free memory and return error code </P></TD></TR>
+</TABLE>
+ 
+<a name="intro0"><h1>Low-level driver for M27, M28 and M81 M-Modules </h1></a>
+<pre>
+The M27/M28/M81 module is a 16-bit binary output module.
+The module does not support interrupts.
+
+The driver handles the output ports as 16 channels.
+The state of the channels can be read.
+
+The driver does not support buffers.
+
+Required: ---
+Switches: _ONE_NAMESPACE_PER_DRIVER_
+
+</pre>
+<a name="M27_GetEntry"><h2>Function M27_GetEntry()</h2></a>
+
+<h3>Syntax</h3>
+<pre>#ifdef _ONE_NAMESPACE_PER_DRIVER_
+    void LL_GetEntry( LL_ENTRY* drvP )
+#else
+    void M27_GetEntry( LL_ENTRY* drvP )
+#endif
+</pre><h3>Description</h3>
+<pre>Initialize drivers jump table
+
+</pre><h3>Input</h3>
+<pre>---
+</pre><h3>Output</h3>
+<pre>drvP  pointer to the initialized jump table structure
+</pre>
+<a name="M27_Init"><h2>Function M27_Init()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_Init(
+    DESC_SPEC       *descP,
+    OSS_HANDLE      *osHdl,
+    MACCESS         *ma,
+    OSS_SEM_HANDLE  *devSemHdl,
+    OSS_IRQ_HANDLE  *irqHdl,
+    LL_HANDLE       **llHdlP
+)
+</pre><h3>Description</h3>
+<pre>Allocate and return ll handle, initialize hardware
+
+The function resets all channels.
+
+The following descriptor keys are used:
+
+Deskriptor key        Default          Range
+--------------------  ---------------  -------------
+DEBUG_LEVEL_DESC      OSS_DBG_DEFAULT  see dbg.h
+DEBUG_LEVEL           OSS_DBG_DEFAULT  see dbg.h
+ID_CHECK              1                0..1 
+
+</pre><h3>Input</h3>
+<pre>descSpec   pointer to descriptor data
+osHdl      oss handle
+ma         hw access handle
+devSemHdl  device semaphore handle
+irqHdl     irq handle
+</pre><h3>Output</h3>
+<pre>llHdlP     ptr to low level driver handle
+return     success (0) or error code
+</pre>
+<a name="M27_Exit"><h2>Function M27_Exit()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_Exit(
+   LL_HANDLE    **llHdlP
+)
+</pre><h3>Description</h3>
+<pre>De-initialize hardware and cleanup memory
+
+The function resets all channels.
+
+</pre><h3>Input</h3>
+<pre>llHdlP    ptr to low level driver handle
+</pre><h3>Output</h3>
+<pre>return    success (0) or error code
+</pre>
+<a name="M27_Read"><h2>Function M27_Read()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_Read(
+    LL_HANDLE *llHdl,
+    int32 ch,
+    int32 *valueP
+)
+</pre><h3>Description</h3>
+<pre>Reads value from device
+
+The function reads the state of the current channel.
+Bit 0 of '*valueP' specify the state (0=reset, 1=set).
+
+</pre><h3>Input</h3>
+<pre>llHdl    ll handle
+ch       current channel
+</pre><h3>Output</h3>
+<pre>valueP   read value
+return   success (0) or error code
+</pre>
+<a name="M27_Write"><h2>Function M27_Write()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_Write(
+    LL_HANDLE *llHdl,
+    int32 ch,
+    int32 value
+)
+</pre><h3>Description</h3>
+<pre>Write value to device
+
+The function sets the current channel, if value&#60;&#62;0.
+The function resets the current channel, if value=0.
+
+</pre><h3>Input</h3>
+<pre>llHdl    ll handle
+ch       current channel
+value    value to write 
+</pre><h3>Output</h3>
+<pre>return   success (0) or error code
+</pre>
+<a name="M27_SetStat"><h2>Function M27_SetStat()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_SetStat(
+    LL_HANDLE *llHdl,
+    int32  code,
+    int32  ch,
+    INT32_OR_64 value32_or_64
+)
+</pre><h3>Description</h3>
+<pre>Set driver status
+
+Following status codes are supported:
+
+Code                 Description                Values
+-------------------  -------------------------  ----------
+M_LL_DEBUG_LEVEL     driver debug level         see oss.h
+M_LL_CH_DIR          direction of curr chan     M_CH_INOUT
+
+</pre><h3>Input</h3>
+<pre>llHdl          ll handle
+code                status code
+ch                  current channel
+value32_or_64       data or
+           ptr to block data struct (M_SG_BLOCK)  (*)
+(*) = for block status codes
+</pre><h3>Output</h3>
+<pre>return     success (0) or error code
+</pre>
+<a name="M27_GetStat"><h2>Function M27_GetStat()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_GetStat(
+    LL_HANDLE *llHdl,
+    int32  code,
+    int32  ch,
+    INT32_OR_64 *value32_or_64P
+)
+</pre><h3>Description</h3>
+<pre>Get driver status
+
+Following status codes are supported:
+
+Code                 Description                Values
+-------------------  -------------------------  ----------
+M_LL_DEBUG_LEVEL     driver debug level         see oss.h
+M_LL_CH_NUMBER       number of channels         16
+M_LL_CH_DIR          direction of curr chan     M_CH_INOUT
+M_LL_CH_LEN          length of curr chan [bits] 1
+M_LL_CH_TYP          description of curr chan   M_CH_BINARY
+M_LL_ID_CHECK        eeprom is checked          0..1
+M_LL_ID_SIZE         eeprom size [bytes]        128
+M_LL_BLK_ID_DATA     eeprom raw data            -
+M_MK_BLK_REV_ID      ident function table ptr   -
+
+</pre><h3>Input</h3>
+<pre>llHdl        ll handle
+code              status code
+ch                current channel
+value32_or_64P    ptr to block data struct (M_SG_BLOCK)  (*) 
+(*) = for block status codes
+</pre><h3>Output</h3>
+<pre>valueP     data ptr or
+           ptr to block data struct (M_SG_BLOCK)  (*) 
+return     success (0) or error code
+(*) = for block status codes
+</pre>
+<a name="M27_BlockRead"><h2>Function M27_BlockRead()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_BlockRead(
+     LL_HANDLE *llHdl,
+     int32     ch,
+     void      *buf,
+     int32     size,
+     int32     *nbrRdBytesP
+)
+</pre><h3>Description</h3>
+<pre>Read data block from device
+
+Read channels 0..('size'-1) into 'buf'.
+Channels will be read in rising order (0..size-1).
+
+Buffer modes:
+   The function always reads from the hardware.
+
+Buffer structure:
+   The data buffer uses one byte per channel:
+
+   +---------+
+   |  byte 0 |  channel 0
+   +---------+
+   |  byte 1 |  channel 1 
+   +---------+
+   |   ...   |   
+   +---------+
+   |  byte n |  channel 'size'-1  
+   +---------+
+
+Byte layout:
+   Bit 0 shows the state of the channel: 
+
+   Bit    7 6 5 4 3 2 1 0
+   Value  0 0 0 0 0 0 0 x
+                        |
+                        x=1 : channel set
+                        x=0 : channel reseted
+
+</pre><h3>Input</h3>
+<pre>llHdl        ll handle
+ch           current channel
+buf          data buffer
+size         data buffer size  (0..16)
+</pre><h3>Output</h3>
+<pre>nbrRdBytesP  number of read bytes (0..16)
+return       success (0) or error code
+</pre>
+<a name="M27_BlockWrite"><h2>Function M27_BlockWrite()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_BlockWrite(
+     LL_HANDLE *llHdl,
+     int32     ch,
+     void      *buf,
+     int32     size,
+     int32     *nbrWrBytesP
+)
+</pre><h3>Description</h3>
+<pre>Write data block to device
+
+Write channels 0..('size'-1) into 'buf'.
+Channels will be written in rising order (0..size-1).
+
+Buffer modes:
+   The function always writes from the hardware.
+
+Buffer structure:
+   The data buffer uses one byte per channel:
+
+   +---------+
+   |  byte 0 |  channel 0
+   +---------+
+   |  byte 1 |  channel 1 
+   +---------+
+   |   ...   |   
+   +---------+
+   |  byte n |  channel 'size'-1  
+   +---------+
+
+Byte layout:
+   If any bit is set, than the channel will be set.
+   If all bits are 0, than the channel will be reseted.
+
+</pre><h3>Input</h3>
+<pre>llHdl        ll handle
+ch           current channel
+buf          data buffer
+size         data buffer size (0..16)
+</pre><h3>Output</h3>
+<pre>nbrWrBytesP  number of written bytes (0..16)
+return       success (0) or error code
+</pre>
+<a name="M27_Irq"><h2>Function M27_Irq()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_Irq(
+   LL_HANDLE *llHdl
+)
+</pre><h3>Description</h3>
+<pre>Interrupt service routine
+
+Unused - the module supports no interrupt.
+
+</pre><h3>Input</h3>
+<pre>llHdl    ll handle
+</pre><h3>Output</h3>
+<pre>return   LL_IRQ_DEVICE    irq caused from device
+         LL_IRQ_DEV_NOT   irq not caused from device
+         LL_IRQ_UNKNOWN   unknown
+</pre>
+<a name="M27_Info"><h2>Function M27_Info()</h2></a>
+
+<h3>Syntax</h3>
+<pre>int32 M27_Info(
+   int32  infoType,
+   ...
+)
+</pre><h3>Description</h3>
+<pre>Get information about hardware and driver requirements.
+
+Following info codes are supported:
+
+Code                      Description
+------------------------  -----------------------------
+LL_INFO_HW_CHARACTER      hardware characteristics
+LL_INFO_ADDRSPACE_COUNT   nr of required address spaces
+LL_INFO_ADDRSPACE         address space information
+LL_INFO_IRQ               interrupt required
+LL_INFO_LOCKMODE          process lock mode required
+
+The LL_INFO_HW_CHARACTER code returns all address and 
+data modes (OR'ed), which are supported from the
+hardware (MDIS_MAxx, MDIS_MDxx).
+
+The LL_INFO_ADDRSPACE_COUNT code returns the number
+of address spaces used from the driver.
+
+The LL_INFO_ADDRSPACE code returns information about one
+specific address space (MDIS_MAxx, MDIS_MDxx). The returned 
+data mode represents the widest hardware access used from 
+the driver.
+
+The LL_INFO_IRQ code returns, if the driver supports an
+interrupt routine (TRUE or FALSE).
+
+The LL_INFO_LOCKMODE code returns, which process locking
+mode is required from the driver (LL_LOCK_xxx).
+
+</pre><h3>Input</h3>
+<pre>infoType     info code
+...          argument(s)
+</pre><h3>Output</h3>
+<pre>return       success (0) or error code
+</pre>
+<a name="Ident"><h2>Function Ident()</h2></a>
+
+<h3>Syntax</h3>
+<pre>static char* Ident( void )
+</pre><h3>Description</h3>
+<pre>Return ident string
+
+</pre><h3>Input</h3>
+<pre>-
+</pre><h3>Output</h3>
+<pre>return  ptr to ident string
+</pre>
+<a name="Cleanup"><h2>Function Cleanup()</h2></a>
+
+<h3>Syntax</h3>
+<pre>static int32 Cleanup(
+   LL_HANDLE    *llHdl,
+   int32        retCode
+)
+</pre><h3>Description</h3>
+<pre>Close all handles, free memory and return error code
+NOTE: The ll handle is invalid after calling this function
+
+</pre><h3>Input</h3>
+<pre>llHdl      ll handle
+retCode    return value
+</pre><h3>Output</h3>
+<pre>return     retCode
+</pre></body>
+</html>

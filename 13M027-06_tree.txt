@@ -1,0 +1,34 @@
+===== [ Target-Tree of fileset ART/13M027-06/13M027-06 (2.2) ] =====
+===== [ Files in category public ] =====
+|-DRIVERS
+|  `-MDIS_LL
+|     `-M027
+|        |-DOC
+|        |  | ------------------ ------------------ ------------------ 
+|        |  | m27_drv.html (1.3) m27_drv.txt (1.3)  main.html (1.3)    
+|        |  ` tools.txt (1.3)    
+|        |-DRIVER
+|        |  `-COM
+|        |     | -------------------- -------------------- 
+|        |     | driver.mak (1.2)     driver_sw.mak (1.1)  
+|        |     | m27_drv.c (1.3)      m27_max.dsc (1.2)    
+|        |     | m27_min.dsc (1.2)    m27_sw_max.dsc (1.1) 
+|        |     ` m27_sw_min.dsc (1.1) 
+|        |-EXAMPLE
+|        |  `-M27_SIMP
+|        |     `-COM
+|        |        | ----------------- ----------------- 
+|        |        ` m27_simp.c (1.4)  program.mak (1.2) 
+|        `-TOOLS
+|           `-M27_RW
+|              `-COM
+|                 | ----------------- ----------------- 
+|                 ` m27_rw.c (1.4)    program.mak (1.2) 
+|-INCLUDE
+|  `-COM
+|     `-MEN
+|        | --------------- 
+|        ` m27_drv.h (2.4) 
+`-PACKAGE_DESC
+   | ------------------ 
+   ` 13m02706.xml (1.3) 

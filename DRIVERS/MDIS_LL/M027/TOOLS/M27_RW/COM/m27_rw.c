@@ -40,6 +40,7 @@
 static const char RCSid[]="$Header: /dd2/CVSR/COM/DRIVERS/MDIS_LL/M027/TOOLS/M27_RW/COM/m27_rw.c,v 1.4 2010/03/10 14:14:57 amorbach Exp $";
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <MEN/men_typs.h>
 #include <MEN/usr_oss.h>

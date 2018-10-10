@@ -38,8 +38,6 @@
  * (c) Copyright 1998 by MEN mikro elektronik GmbH, Nuernberg, Germany 
  ****************************************************************************/
  
-static const char RCSid[]="$Id: m27_simp.c,v 1.4 2010/03/10 14:15:00 amorbach Exp $";
-
 #include <stdio.h>
 #include <string.h>
 #include <MEN/men_typs.h>

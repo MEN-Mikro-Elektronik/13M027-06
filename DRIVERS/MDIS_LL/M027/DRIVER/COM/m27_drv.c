@@ -40,8 +40,6 @@
  * (c) Copyright 1998 by MEN mikro elektronik GmbH, Nuernberg, Germany
  ****************************************************************************/
 
-static const char RCSid[]="$Id: m27_drv.c,v 1.3 2010/03/10 14:14:55 amorbach Exp $";
-
 #define _NO_LL_HANDLE		/* ll_defs.h: don't define LL_HANDLE struct */
 
 #include <MEN/men_typs.h>   /* system dependend definitions   */

@@ -5,8 +5,6 @@
  ****************************************************************************
  *  
  *       Author: ds
- *        $Date: 2010/03/10 14:15:00 $
- *    $Revision: 1.4 $
  *
  *  Description: Simple example program for the M27 driver 
  *                      
@@ -38,6 +36,8 @@
 #include <MEN/mdis_err.h>
 #include <MEN/usr_oss.h>
 #include <MEN/m27_drv.h>
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*--------------------------------------+
 |   DEFINES                             |

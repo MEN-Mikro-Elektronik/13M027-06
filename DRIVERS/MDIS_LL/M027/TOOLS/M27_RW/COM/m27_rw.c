@@ -5,8 +5,6 @@
  ****************************************************************************
  *  
  *       Author: ds
- *        $Date: 2010/03/10 14:14:57 $
- *    $Revision: 1.4 $
  *
  *  Description: Universal tool for read/write M27 channels
  *
@@ -39,6 +37,8 @@
 #include <MEN/usr_utl.h>
 #include <MEN/mdis_api.h>
 #include <MEN/m27_drv.h>
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*--------------------------------------+
 |   DEFINES                             |
@@ -77,7 +77,7 @@ void usage(void)
 	printf("  -t (requires option -S) : toggle specified channels    [none]\n");
 	printf("  Note: If you specify only the device name, the path will be held open.\n");
 	printf("\n");
-	printf("(c) 1998 by MEN mikro elektronik GmbH\n\n");
+	printf("Copyright (c) 1998-2019, MEN Mikro Elektronik GmbH\n%s\n", IdentString);
 }
 
 /********************************* main *************************************

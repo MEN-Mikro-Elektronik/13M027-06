@@ -3,8 +3,6 @@
  *         Name: m27_drv.h
  *
  *       Author: ds
- *        $Date: 2010/03/10 14:15:09 $
- *    $Revision: 2.4 $
  *
  *  Description: Header file for M27 driver
  *               - M27 specific status codes

@@ -1,11 +1,9 @@
 /*********************  P r o g r a m  -  M o d u l e ***********************
  *
  *         Name: m27_drv.c
- *      Project: M27 module driver (MDIS V4.x)
+ *      Project: M27 module driver 
  *
  *       Author: dieter.pfeuffer@men.de
- *        $Date: 2010/03/10 14:14:55 $
- *    $Revision: 1.3 $
  *
  *  Description: Low-level driver for M27, M28 and M81 M-Modules
  *
@@ -94,6 +92,8 @@ typedef struct {
 /* include files which need LL_HANDLE */
 #include <MEN/ll_entry.h>   /* low level driver jumptable  */
 #include <MEN/m27_drv.h>	/* M27 driver header file */
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*-----------------------------------------+
 |  PROTOTYPES                              |

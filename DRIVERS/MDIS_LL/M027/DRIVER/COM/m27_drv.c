@@ -93,7 +93,6 @@ typedef struct {
 #include <MEN/ll_entry.h>   /* low level driver jumptable  */
 #include <MEN/m27_drv.h>	/* M27 driver header file */
 
-static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*-----------------------------------------+
 |  PROTOTYPES                              |
